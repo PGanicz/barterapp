@@ -71,3 +71,7 @@ atlassian-ide-plugin.xml
 
 # Google Services
 app/google-services.json
+
+## File-based project format:
+*.iml
+*.iws
