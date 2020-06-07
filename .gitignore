@@ -71,6 +71,8 @@ atlassian-ide-plugin.xml
 
 # Google Services
 app/google-services.json
+app/build
+app/src/debug/res/values/google_maps_api.xml
 
 ## File-based project format:
 *.iml
