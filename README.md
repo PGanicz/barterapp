@@ -4,7 +4,7 @@
  - Java 11
  - Android Studio 
  - google-services.json in app-level folder (Get it by creating account at firebase)
- - Populate Google Maps API key in `app/src/relese/res/values/google_maps_api.xml`
+ - Populate Google Maps API key in `res/values/google_maps_api.xml`
  
 ## Features
  - Google authentitcation
@@ -27,7 +27,7 @@
 ## Build & Run 
  1. Clone a project from github 
  2. Create android emulator or use  real device
- 3. Populate Google Maps API key in `app/src/relese/res/values/google_maps_api.xml`
+ 3. Populate Google Maps API key in `res/values/google_maps_api.xml`
  4. Add google-services.json in app-level folder
  5. Run application (At this point you are ready to build and run the application on your real device or emulator (with google services).)
 
