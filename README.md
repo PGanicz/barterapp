@@ -31,3 +31,9 @@
  4. Add google-services.json in app-level folder
  5. Run application (At this point you are ready to build and run the application on your real device or emulator (with google services).)
 
+## Example photos
+![Mesenger](example_imgs/Mesenger.png)  
+![Chatlist](example_imgs/Chatlist.png)  
+![Inventory](example_imgs/Inventory.png)  
+![MyInventory](example_imgs/MyInventory.png)  
+![Map](example_imgs/Map.png)
