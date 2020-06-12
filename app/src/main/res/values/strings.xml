@@ -18,4 +18,5 @@
     <string name="pick_localization">Wybierz lokalizację</string>
     <string name="user_name">User name</string>
     <string name="save">Save</string>
+    <bool name="enable_nearby_search">true</bool>
 </resources>

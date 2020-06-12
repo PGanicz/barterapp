@@ -135,7 +135,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private void renderCircleAvatar(UserLocationData userLocationData, LatLng latLng, DocumentSnapshot snapshot) {
         User user = snapshot.toObject(User.class);
-        if (!"default".equals(user.getImageUrl())) {
+        if (!"default".equals(user.getImageUrl())&& getActivity() != null) {
             MarkerOptions options = new MarkerOptions()
                     .position(latLng)
                     .title(userLocationData.getDisplayName());

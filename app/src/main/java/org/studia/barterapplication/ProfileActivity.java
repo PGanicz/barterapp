@@ -19,12 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.studia.barterapplication.chat.User;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextInputEditText displayNameInput;
     private ProgressBar progressBar;
     private Bitmap bitmap;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            uid = user.getUid();
             setupUserData(user);
         }
         progressBar.setVisibility(View.GONE);
@@ -72,7 +76,9 @@ public class ProfileActivity extends AppCompatActivity {
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setDisplayName(displayNameInput.getText().toString())
                 .build();
-        handleUpload(bitmap);
+        if (bitmap != null) {
+            handleUpload(bitmap);
+        }
         user.updateProfile(request)
                 .addOnSuccessListener(result -> updateSuccess(view, user))
                 .addOnFailureListener(e -> updateResult(view, "Profile image failed..."));
@@ -88,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void updateSuccess(View view, FirebaseUser user) {
         FirebaseFirestore.getInstance().collection("Users")
                 .document(user.getUid())
-                .set(new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString()));
+                .set(new User(user.getUid(), user.getDisplayName(), user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : "default"));
         updateResult(view, "Updated successfully");
     }
 
@@ -130,8 +136,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setUserProfileUrl(Uri uri) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(uid)
+                .set(Collections.singletonMap("imageUrl",  uri != null ? uri.toString() : "default"), SetOptions.merge());
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(uri)
                 .build();
@@ -140,7 +149,5 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.makeText(ProfileActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> Toast.makeText(ProfileActivity.this, "Profile image failed...", Toast.LENGTH_SHORT).show());
-
-        ;
     }
 }

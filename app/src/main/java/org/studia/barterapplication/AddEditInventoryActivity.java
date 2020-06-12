@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -167,10 +168,10 @@ public class AddEditInventoryActivity extends AppCompatActivity {
         String title = itemName.getText().toString().trim();
         String description = itemName.getText().toString().trim();
         Map<String, Object> map = new HashMap<String, Object>() {{
-            put("title", title);
+            put("name", title);
             put("description", description);
         }};
-        inventory.document(inventoryId).update(map);
+        inventory.document(inventoryId).set(map, SetOptions.merge());
     }
 
     private void onUploadFailure() {
